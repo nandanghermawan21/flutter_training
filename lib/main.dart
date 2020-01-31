@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'presenter/LoginPresenter.dart';
+import 'package:pelatihan_dasar_flutter/presenter/HomePresenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences prefs;
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Login(),
+      home: Home(),
     );
   }
 }
