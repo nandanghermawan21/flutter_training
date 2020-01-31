@@ -14,6 +14,8 @@ class CustomerModel {
   String gender;
   String lat;
   String lon;
+  String photo;
+  bool isVisited;
 
   CustomerModel({
     this.id,
@@ -23,21 +25,25 @@ class CustomerModel {
     this.gender,
     this.lat,
     this.lon,
+    this.photo,
+    this.isVisited,
   });
 
   factory CustomerModel.fromJson(json) => _$CustomerModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CustomerModelToJson(this);
 
-  static Future<CustomerModel> getAll() {
-    return http.post("http://dev.enerren.com/fluttertraining/api/Customer/get",
+  static Future<List<CustomerModel>> getAll() {
+    return http.get("http://dev.enerren.com/fluttertraining/api/Customer/get",
         headers: {
           "lang": "id",
           HttpHeaders.cacheControlHeader: "application/json",
         }).then((http.Response response) {
       final int statusCode = response.statusCode;
       if (statusCode == 200) {
-        return CustomerModel.fromJson(json.decode(response.body));
+        return (json.decode(response.body) as List)
+            .map((f) => CustomerModel.fromJson((f)))
+            .toList();
       } else if (statusCode == 400) {
         throw response.body;
       } else {

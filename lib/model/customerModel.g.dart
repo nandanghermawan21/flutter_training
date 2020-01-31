@@ -15,6 +15,8 @@ CustomerModel _$CustomerModelFromJson(Map<String, dynamic> json) {
     gender: json['gender'] as String,
     lat: json['lat'] as String,
     lon: json['lon'] as String,
+    photo: json['photo'] as String,
+    isVisited: json['isVisited'] as bool,
   );
 }
 
@@ -27,4 +29,6 @@ Map<String, dynamic> _$CustomerModelToJson(CustomerModel instance) =>
       'gender': instance.gender,
       'lat': instance.lat,
       'lon': instance.lon,
+      'photo': instance.photo,
+      'isVisited': instance.isVisited,
     };
