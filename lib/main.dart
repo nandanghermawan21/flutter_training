@@ -1,26 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:pelatihan_dasar_flutter/presenter/DetailPresenter.dart';
 import 'package:pelatihan_dasar_flutter/presenter/HomePresenter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'presenter/LoginPresenter.dart';
-
-SharedPreferences prefs;
 
 class PrefsKey {
   static String user = "user";
 }
 
-Future<void> init() async {
-  prefs = await SharedPreferences.getInstance();
-  return;
-}
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  init().then((onValue) {
-    runApp(MyApp());
-  });
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
