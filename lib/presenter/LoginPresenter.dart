@@ -111,18 +111,19 @@ abstract class LoginPresenter extends State<Login> {
       safeUser(onValue).then((res) {
         String _user = (prefs.getString(PrefsKey.user));
         print(_user);
-        return showModalBottomSheet(
-          context: context,
-          builder: (BuildContext context) {
-            return Container(
-              height: 100,
-              color: Colors.white,
-              child: Center(
-                child: Text("Selamat Datang ${onValue.name}"),
-              ),
-            );
-          },
-        );
+        Navigator.of(context).pushReplacementNamed("home");
+        //   return showModalBottomSheet(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       return Container(
+        //         height: 100,
+        //         color: Colors.white,
+        //         child: Center(
+        //           child: Text("Selamat Datang ${onValue.name}"),
+        //         ),
+        //       );
+        //     },
+        //   );
       });
     }).catchError((onError) {
       stopLoading();

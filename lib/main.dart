@@ -4,6 +4,7 @@ import 'package:pelatihan_dasar_flutter/model/HomeViewModel.dart';
 import 'package:pelatihan_dasar_flutter/model/networkModel.dart';
 import 'package:pelatihan_dasar_flutter/presenter/DetailPresenter.dart';
 import 'package:pelatihan_dasar_flutter/presenter/HomePresenter.dart';
+import 'package:pelatihan_dasar_flutter/presenter/LoginPresenter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -58,8 +59,9 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      initialRoute: "home",
+      initialRoute: "login",
       routes: {
+        "login": (ctx) => Login(),
         "home": (ctx) => Home(),
         "detail": (ctx) {
           Map<dynamic, dynamic> arg =
