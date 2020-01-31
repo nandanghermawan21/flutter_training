@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pelatihan_dasar_flutter/model/customerModel.dart';
-import 'package:pelatihan_dasar_flutter/model/HomeViewModel.dart';
 import 'package:pelatihan_dasar_flutter/presenter/HomePresenter.dart';
-import 'package:provider/provider.dart';
 
 class HomeView extends HomeState {
   @override
@@ -28,16 +25,12 @@ class HomeView extends HomeState {
                           color: Colors.white,
                           size: 50,
                         ),
-                        Consumer<HomeViewModel>(
-                          builder: ((ctx, dt, child) {
-                            return Text(
-                              "${dt.customers.length}",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            );
-                          }),
-                        )
+                        Text(
+                          "${0}",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -52,16 +45,12 @@ class HomeView extends HomeState {
                           color: Colors.white,
                           size: 50,
                         ),
-                        Consumer<HomeViewModel>(
-                          builder: ((ctx, dt, child) {
-                            return Text(
-                              "${dt.customers.where((x) => x.isVisited).toList().length}",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            );
-                          }),
-                        )
+                        Text(
+                          "${0}",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -89,23 +78,19 @@ class HomeView extends HomeState {
               ),
             ),
           ),
-          Consumer<HomeViewModel>(
-            builder: ((ctx, dt, child) {
-              return Expanded(
-                child: ListView(
-                  children: List.generate(dt.customers.length, (i) {
-                    return listCustomer(context, dt.customers[i]);
-                  }),
-                ),
-              );
-            }),
-          )
+          Expanded(
+            child: ListView(
+              children: List.generate(30, (i) {
+                return listCustomer(context);
+              }),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget listCustomer(BuildContext context, CustomerModel item) {
+  Widget listCustomer(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
@@ -126,12 +111,13 @@ class HomeView extends HomeState {
             height: 60,
             width: 60,
             decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.grey,
                 borderRadius: BorderRadius.all(
                   Radius.circular(50),
                 ),
                 image: DecorationImage(
-                  image: NetworkImage("${item.photo}"),
+                  image: NetworkImage(
+                      "https://cdn4.iconfinder.com/data/icons/rcons-user/32/boss_woman-512.png"),
                   fit: BoxFit.cover,
                 )),
           ),
@@ -142,7 +128,7 @@ class HomeView extends HomeState {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "${item.name}",
+                    "Nama Customer",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -150,23 +136,21 @@ class HomeView extends HomeState {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
-                    child: Text("${item.address}"),
+                    child: Text("alamat customer"),
                   )
                 ],
               ),
             ),
           ),
           GestureDetector(
-            onTap: () {
-              super.gotoDetail(item);
-            },
+            onTap: () {},
             child: Container(
               width: 30,
               child: Center(
                 child: Icon(
                   Icons.assistant_photo,
                   size: 30,
-                  color: item.isVisited ? Colors.blue : Colors.grey.shade500,
+                  color: Colors.grey.shade500,
                 ),
               ),
             ),

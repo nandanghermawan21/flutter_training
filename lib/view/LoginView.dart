@@ -35,7 +35,7 @@ class LoginView extends LoginPresenter {
                               height: 10,
                             ),
                             Text(
-                              user != null ? "Selamat datang kembali ${user.name}" : "",
+                               "Selamat datang kembali ${"nama user"}",
                               style: TextStyle(color: Colors.white),
                             ),
                           ],

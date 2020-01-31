@@ -1,10 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:pelatihan_dasar_flutter/model/userModel.dart';
 import 'package:pelatihan_dasar_flutter/view/LoginView.dart';
-
-import '../main.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -25,15 +20,11 @@ abstract class LoginPresenter extends State<Login> {
   FocusNode usernameFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
 
-  UserModel user;
 
   @override
   void initState() {
     super.initState();
     //get user from pref
-    String _user = (prefs.getString(PrefsKey.user));
-    print(_user);
-    user = _user == null ? null : UserModel.fromJson(json.decode(_user));
   }
 
   void openObscureText() {
@@ -95,50 +86,7 @@ abstract class LoginPresenter extends State<Login> {
     });
   }
 
-  Future<void> safeUser(UserModel user) async {
-    await prefs.setString(PrefsKey.user, json.encode(user.toJson()));
-    return;
-  }
-
   void submit() {
     if (!validate()) return;
-    startLoading();
-    UserModel.login(
-      password: passwordController.text,
-      username: userNameController.text,
-    ).then((onValue) {
-      stopLoading();
-      safeUser(onValue).then((res) {
-        String _user = (prefs.getString(PrefsKey.user));
-        print(_user);
-        Navigator.of(context).pushReplacementNamed("home");
-        //   return showModalBottomSheet(
-        //     context: context,
-        //     builder: (BuildContext context) {
-        //       return Container(
-        //         height: 100,
-        //         color: Colors.white,
-        //         child: Center(
-        //           child: Text("Selamat Datang ${onValue.name}"),
-        //         ),
-        //       );
-        //     },
-        //   );
-      });
-    }).catchError((onError) {
-      stopLoading();
-      return showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return Container(
-            height: 100,
-            color: Colors.white,
-            child: Center(
-              child: Text("login gagal $onError"),
-            ),
-          );
-        },
-      );
-    });
   }
 }
