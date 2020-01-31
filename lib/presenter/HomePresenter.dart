@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pelatihan_dasar_flutter/model/customerModel.dart';
 import 'package:pelatihan_dasar_flutter/view/HomeView.dart';
 
 class Home extends StatefulWidget {
@@ -10,7 +9,6 @@ class Home extends StatefulWidget {
 }
 
 abstract class HomeState extends State<Home> {
-   List<CustomerModel> customerModel = [];
 
    @override
   void initState() {
