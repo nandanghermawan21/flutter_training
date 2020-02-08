@@ -147,6 +147,7 @@ class HomeView extends HomeState {
                   Text(
                     "${item.name}",
                     style: TextStyle(
+                      fontFamily: "catedral",
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),

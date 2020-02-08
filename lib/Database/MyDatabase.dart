@@ -20,7 +20,6 @@ class MyDatabase {
     var databasePath = await getDatabasesPath();
     // print(databasePath);
     String path = join(databasePath, dbName);
-    print(path);
 
     // make sure the folder exists
     if (await Directory(dirname(path)).exists()) {
@@ -53,7 +52,6 @@ class MyDatabase {
         //   db.rawQuery(VisitQuery.create());
         // });
       }
-      print(version);
     });
 
     return this;
