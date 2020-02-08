@@ -65,24 +65,27 @@ class HomeView extends HomeState {
                       ],
                     ),
                   ),
-                  Container(
-                    width: 50,
-                    height: 80,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                          size: 50,
-                        ),
-                        Text(
-                          "",
-                          style: TextStyle(
+                  GestureDetector(
+                    onTap: gotoWeb,
+                    child: Container(
+                      width: 50,
+                      height: 80,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.satellite,
                             color: Colors.white,
+                            size: 50,
                           ),
-                        )
-                      ],
+                          Text(
+                            "Web",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -156,20 +159,28 @@ class HomeView extends HomeState {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              super.gotoDetail(item);
-            },
-            child: Container(
-              width: 30,
-              child: Center(
-                child: Icon(
-                  Icons.assistant_photo,
-                  size: 30,
-                  color: item.isVisited ? Colors.blue : Colors.grey.shade500,
+          FutureBuilder<bool>(
+            future: checkOnDbLocalExist(item.id),
+            initialData: true,
+            builder: ((ctx, dt) {
+              return GestureDetector(
+                onTap: () {
+                  super.gotoDetail(item);
+                },
+                child: Container(
+                  width: 30,
+                  child: Center(
+                    child: Icon(
+                      Icons.assistant_photo,
+                      size: 30,
+                      color: item.isVisited == true
+                          ? Colors.blue
+                          : dt.data ? Colors.yellow : Colors.grey.shade500,
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              );
+            }),
           )
         ],
       ),

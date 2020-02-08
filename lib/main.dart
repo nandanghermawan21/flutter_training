@@ -1,16 +1,24 @@
+import 'dart:convert';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:pelatihan_dasar_flutter/Database/MyDatabase.dart';
 import 'package:pelatihan_dasar_flutter/model/HomeViewModel.dart';
 import 'package:pelatihan_dasar_flutter/model/networkModel.dart';
 import 'package:pelatihan_dasar_flutter/presenter/DetailPresenter.dart';
 import 'package:pelatihan_dasar_flutter/presenter/HomePresenter.dart';
 import 'package:pelatihan_dasar_flutter/presenter/LoginPresenter.dart';
+import 'package:pelatihan_dasar_flutter/presenter/WebPresenter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'model/userModel.dart';
 
 SharedPreferences prefs;
 HomeViewModel homeViewModel = new HomeViewModel();
 NetworkModel networkModel = new NetworkModel();
+MyDatabase database = new MyDatabase();
+UserModel user;
 
 class PrefsKey {
   static String user = "user";
@@ -18,7 +26,11 @@ class PrefsKey {
 
 Future<void> init() async {
   checkInternetConnection();
+  await MyDatabase().initializeDb();
   prefs = await SharedPreferences.getInstance();
+  //get user from shared preferences
+  String _user = (prefs.getString(PrefsKey.user));
+  user = _user == null ? null : UserModel.fromJson(json.decode(_user));
   return;
 }
 
@@ -59,7 +71,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      initialRoute: "login",
+      initialRoute: user != null ? "home" : "login",
       routes: {
         "login": (ctx) => Login(),
         "home": (ctx) => Home(),
@@ -70,6 +82,7 @@ class MyApp extends StatelessWidget {
             customer: arg["customerData"],
           );
         },
+        "web": (ctx) => Web(),
       },
     );
   }
@@ -77,7 +90,6 @@ class MyApp extends StatelessWidget {
 
 void checkInternetConnection() {
   Connectivity().checkConnectivity().then((onValue) {
-    print(onValue);
     if (onValue != ConnectivityResult.none) {
       networkModel.networkStatus = true;
       networkModel.commit();
@@ -85,6 +97,6 @@ void checkInternetConnection() {
       networkModel.networkStatus = false;
       networkModel.commit();
     }
-    print(onValue);
+    checkInternetConnection();
   }).catchError((onError) {});
 }

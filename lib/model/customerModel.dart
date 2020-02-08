@@ -53,4 +53,42 @@ class CustomerModel {
       throw onError;
     });
   }
+
+  static Future<CustomerModel> confirmVisit({
+    int customerId,
+    String photo,
+    bool isStyInCurrentBase,
+    String newAddress,
+    String reason,
+    double lat,
+    double lon,
+  }) {
+    return http
+        .post(
+            "http://dev.enerren.com/FlutterTraining/api/Customer/confirmVisit?CustomerId=$customerId",
+            headers: {
+              "lang": "id",
+              HttpHeaders.contentTypeHeader: "application/json",
+            },
+            body: json.encode({
+              "photo": photo,
+              "isStyInCurrentBase": true,
+              "newAddress": newAddress,
+              "reason": reason,
+              "lat": lat,
+              "lon": lon
+            }))
+        .then((response) {
+      final int statusCode = response.statusCode;
+      if (statusCode == 200) {
+        return CustomerModel.fromJson(json.decode(response.body));
+      } else if (statusCode == 400) {
+        throw response.body;
+      } else {
+        throw response;
+      }
+    }).catchError((onError) {
+      throw onError;
+    });
+  }
 }
