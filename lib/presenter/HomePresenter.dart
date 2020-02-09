@@ -24,7 +24,6 @@ abstract class HomeState extends State<Home> {
     CustomerModel.getAll().then((onValue) {
       homeViewModel.customers = onValue;
       homeViewModel.commit();
-      print(homeViewModel.customers);
     }).catchError((onError) {
       try {
         http.Response response = onError;

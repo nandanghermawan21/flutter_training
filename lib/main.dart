@@ -85,8 +85,7 @@ class MyApp extends StatelessWidget {
 }
 
 void checkInternetConnection() {
-  Connectivity().checkConnectivity().then((onValue) {
-    print(onValue);
+   Connectivity().checkConnectivity().then((onValue) {
     if (onValue != ConnectivityResult.none) {
       networkModel.networkStatus = true;
       networkModel.commit();
@@ -94,6 +93,6 @@ void checkInternetConnection() {
       networkModel.networkStatus = false;
       networkModel.commit();
     }
-    print(onValue);
+    checkInternetConnection();
   }).catchError((onError) {});
 }
