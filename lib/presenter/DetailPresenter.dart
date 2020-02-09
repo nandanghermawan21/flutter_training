@@ -113,7 +113,7 @@ abstract class DetailState extends State<Detail> {
         main.homeViewModel.commit();
         Navigator.of(context).pop();
       }).catchError((onError) {
-        print(onError);
+        print(onError.body);
         data.onLoading = false;
         data.commit();
       });
