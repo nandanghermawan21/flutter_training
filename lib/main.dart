@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:pelatihan_dasar_flutter/model/HomeViewModel.dart';
@@ -8,9 +10,12 @@ import 'package:pelatihan_dasar_flutter/presenter/LoginPresenter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'model/userModel.dart';
+
 SharedPreferences prefs;
 HomeViewModel homeViewModel = new HomeViewModel();
 NetworkModel networkModel = new NetworkModel();
+UserModel user;
 
 class PrefsKey {
   static String user = "user";
@@ -19,6 +24,10 @@ class PrefsKey {
 Future<void> init() async {
   checkInternetConnection();
   prefs = await SharedPreferences.getInstance();
+  prefs = await SharedPreferences.getInstance();
+  //get user from shared preferences
+  String _user = (prefs.getString(PrefsKey.user));
+  user = _user == null ? null : UserModel.fromJson(json.decode(_user));
   return;
 }
 
@@ -59,7 +68,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      initialRoute: "login",
+      initialRoute: user != null ? "home" : "login",
       routes: {
         "login": (ctx) => Login(),
         "home": (ctx) => Home(),
